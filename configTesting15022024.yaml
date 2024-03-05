@@ -1,0 +1,88 @@
+websites:
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html"
+    product_name: "Methanol" 
+    type: "RM"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html"
+    product_name: "Sulfuric acid" 
+    type: "RM"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-368.html"
+    product_name: "Caustic soda" 
+    type: "FG"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-218.html"
+    product_name: "Acetic acid" 
+    type: "RM"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-226.html"
+    product_name: "Soda ash" 
+    type: "RM"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-355.html"
+    product_name: "Hydrochloric acid"
+    type: "FG"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-541.html"
+    product_name: "PA" 
+    type: "FG"
+    currency: "RMB"
+  - WebsiteName: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-708.html"
+    product_name: "Phosphorus yellow" 
+    type: "RM"
+    currency: "RMB"
+  #- WebsiteName: "investing"
+  #  url: "https://in.investing.com/commodities/brent-oil-historical-data"
+  #  product_name: "Paraffin (Brent-Oil)" 
+  #  type: "RM"
+  #  currency: "USD"
+  #- WebsiteName: "investing"
+  #  url: "https://in.investing.com/commodities/brent-oil-historical-data"
+  #  product_name: "Crude Oil" 
+  #  type: "RM"
+  #  currency: "USD"
+  #- WebsiteName: "goodreturns"
+  #  url: "https://www.goodreturns.in/diesel-price-in-mumbai.html"
+  #  product_name: "Diesel" 
+  #  type: "RM"
+  #  currency: "INR"
+  #- WebsiteName: "investing_RMB"
+  #  url: "https://in.investing.com/currencies/cny-inr-historical-data"
+  #  product_name: "RMB_to_INR" 
+  #  type: "currency"
+  #  currency: "RMB"
+  #- WebsiteName: "investing_USD"
+  #  url: "https://in.investing.com/currencies/usd-inr-historical-data"
+  #  product_name: "USD_to_INR"
+  #  type: "currency"
+  #  currency: "USD"
+
+database:
+  development:
+    driver: "{ODBC Driver 17 for SQL Server}"
+    server: 'grcd-az-mdg-pp-sql-01.database.windows.net'
+    database: 'GRCD-AZ-BIH-PP-DBA-01'
+    uid: 'azuremdg.pelsqldb'
+    pwd: '$pEl*@driYOd'
+    table_name: "SpotPriceTracker_dev"
+    schema: "db_development"  
+
+  production:
+    driver: '{ODBC Driver 17 for SQL Server}'
+    server: 'grcd-az-mdg-pp-sql-01.database.windows.net'
+    database: 'DBO'
+    uid: 'azuremdg.bihsqldb'
+    pwd: '@Zu7$3Qmi$y'
+    table_name: "SpotPriceTracker_dev"
+    schema: "dbo"
+
+proxies:
+  http: '185.46.212.90:80'
