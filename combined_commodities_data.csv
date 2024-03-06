@@ -1,0 +1,57 @@
+Commodity,Price,Date,Product Name,Type,Currency,WebsiteName,QueryTimestamp,TableFetchTimestamp
+Methanol,2691.67,2024-03-05,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Methanol,2711.67,2024-03-04,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Methanol,2740.0,2024-03-03,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Methanol,2740.0,2024-03-02,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Methanol,2740.0,2024-03-01,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Methanol,2730.0,2024-02-29,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Methanol,2741.67,2024-02-28,Methanol,RM,RMB,sunsirs,2024-03-05 14:55:46,2024-03-05 14:55:46
+Sulfuric acid,241.25,2024-03-05,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Sulfuric acid,241.25,2024-03-04,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Sulfuric acid,223.75,2024-03-03,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Sulfuric acid,223.75,2024-03-02,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Sulfuric acid,223.75,2024-03-01,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Sulfuric acid,203.75,2024-02-29,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Sulfuric acid,203.75,2024-02-28,Sulfuric acid,RM,RMB,sunsirs,2024-03-05 14:55:51,2024-03-05 14:55:51
+Caustic soda,781.0,2024-03-05,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Caustic soda,781.0,2024-03-04,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Caustic soda,782.0,2024-03-03,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Caustic soda,782.0,2024-03-02,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Caustic soda,782.0,2024-03-01,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Caustic soda,782.0,2024-02-29,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Caustic soda,782.0,2024-02-28,Caustic soda,FG,RMB,sunsirs,2024-03-05 14:55:58,2024-03-05 14:55:58
+Acetic acid,3050.0,2024-03-05,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Acetic acid,3050.0,2024-03-04,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Acetic acid,3100.0,2024-03-03,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Acetic acid,3100.0,2024-03-02,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Acetic acid,3100.0,2024-03-01,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Acetic acid,3100.0,2024-02-29,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Acetic acid,3100.0,2024-02-28,Acetic acid,RM,RMB,sunsirs,2024-03-05 14:56:04,2024-03-05 14:56:04
+Soda ash,2150.0,2024-03-05,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Soda ash,2190.0,2024-03-04,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Soda ash,2190.0,2024-03-03,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Soda ash,2190.0,2024-03-02,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Soda ash,2190.0,2024-03-01,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Soda ash,2190.0,2024-02-29,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Soda ash,2190.0,2024-02-28,Soda ash,RM,RMB,sunsirs,2024-03-05 14:56:18,2024-03-05 14:56:18
+Hydrochloric acid,90.0,2024-03-05,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+Hydrochloric acid,90.0,2024-03-04,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+Hydrochloric acid,90.0,2024-03-03,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+Hydrochloric acid,90.0,2024-03-02,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+Hydrochloric acid,90.0,2024-03-01,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+Hydrochloric acid,85.0,2024-02-29,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+Hydrochloric acid,85.0,2024-02-28,Hydrochloric acid,FG,RMB,sunsirs,2024-03-05 14:56:21,2024-03-05 14:56:21
+PA,7587.5,2024-03-05,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+PA,7587.5,2024-03-04,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+PA,7687.5,2024-03-03,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+PA,7687.5,2024-03-02,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+PA,7687.5,2024-03-01,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+PA,7687.5,2024-02-29,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+PA,7687.5,2024-02-28,PA,FG,RMB,sunsirs,2024-03-05 14:56:28,2024-03-05 14:56:28
+Phosphorus yellow,24026.67,2024-03-05,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45
+Phosphorus yellow,24260.0,2024-03-04,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45
+Phosphorus yellow,24260.0,2024-03-03,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45
+Phosphorus yellow,24260.0,2024-03-02,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45
+Phosphorus yellow,24260.0,2024-03-01,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45
+Phosphorus yellow,24326.67,2024-02-29,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45
+Phosphorus yellow,24326.67,2024-02-28,Phosphorus yellow,RM,RMB,sunsirs,2024-03-05 14:56:45,2024-03-05 14:56:45

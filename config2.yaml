@@ -1,0 +1,66 @@
+websites:
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html"
+    product_name: "Methanol" 
+    type: "RM"
+    currency: "RMB"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html"
+    product_name: "Sulfuric acid" 
+    type: "RM"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-368.html"
+    product_name: "Caustic soda" 
+    type: "FG"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-218.html"
+    product_name: "Acetic acid" 
+    type: "RM"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-226.html"
+    product_name: "Soda ash" 
+    type: "RM"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-355.html"
+    product_name: "Hydrochloric acid"
+    type: "FG"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-541.html"
+    product_name: "PA" 
+    type: "FG"
+  - name: "sunsirs"
+    url: "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-708.html"
+    product_name: "Phosphorus yellow" 
+    type: "RM"
+
+database:
+  development:
+    driver: '{ODBC Driver 17 for SQL Server}'
+    server: 'grcd-az-mdg-pp-sql-01.database.windows.net'
+    database: 'GRCD-AZ-BIH-PP-DBA-01'
+    uid: 'azuremdg.pelsqldb'
+    pwd: '$pEl*@driYOd'
+    table_name: 'nsr_prod_real_time_price'
+    schema: 'db_development'  
+
+proxies:
+  http: '185.46.212.90:80'
+  
+  #production:
+  #  driver: '{ODBC Driver 17 for SQL Server}'
+  #  server: 'grcd-az-mdg-pp-sql-01.database.windows.net'
+  #  database: 'DBO'
+  #  uid: 'azuremdg.bihsqldb',
+  #  pwd: '@Zu7$3Qmi$y',
+  #  table_name: 'nsr_prod_real_time_price'
+  #  schema: 'dbo' 
+
+#urls:
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-368.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-218.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-226.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-355.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-541.html
+#    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-708.html

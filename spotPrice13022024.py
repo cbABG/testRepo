@@ -1,15 +1,37 @@
+import yaml
 import requests
 import pandas as pd
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
 from datetime import datetime as dt
 import numpy as np
 import pyodbc
 import traceback
 
-conn=pyodbc.connect(driver='{ODBC Driver 17 for SQL Server}',server='grcd-az-mdg-pp-sql-01.database.windows.net',
-                            database='GRCD-AZ-PEL-PP-DBA-01',uid='azuremdg.pelsqldb',pwd='$pEl*@driYOd'
-                            )
-cursor=conn.cursor()
+# Load configuration from YAML file
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+
+environment = "development" 
+#environment = "production"
+
+# Select the appropriate configuration
+db_config = config['database'][environment]
+
+# Use selected configuration for database connection
+conn = pyodbc.connect(
+    driver=db_config['driver'],
+    server=db_config['server'],
+    database=db_config['database'],
+    uid=db_config['uid'],
+    pwd=db_config['pwd']
+)
+cursor = conn.cursor()
+
+proxies = {'http': config['proxies']['http']}
+
+# URLs list is now fetched from the config file
+urls = config['urls']
+
 
 def find_year(date):
     year=dt.today().year
@@ -25,12 +47,22 @@ def find_year(date):
         return dt(day=day,month=month,year=year)
 
 def fetch_commodity_data(url):
-    payload = {}
-    headers = {}
-    http_proxy  = "185.46.212.91:80"
-    proxies = {'http': http_proxy}
-    response = requests.request("GET", url, proxies=proxies)
-    html = response.content
+    try:
+        response = requests.request("GET", url, proxies=proxies)
+        response.raise_for_status() 
+        html = response.content
+        
+    except requests.exceptions.ProxyError as e:
+        print(f"Proxy error occurred: {e}")
+        
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP error occurred: {e}")
+        
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from {url}: {e}")
+        
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
     
     # creating soup object 
     data = BeautifulSoup(html, 'html.parser') 
@@ -55,28 +87,26 @@ def fetch_commodity_data(url):
         print("Not able to fetch the price")
         return pd.DataFrame(columns=['Date', 'Commodity', 'Price'])
 
-
-def upload_data(df:pd.DataFrame,table:str,delete_date:dt.date=None,date_col:str=None,where:dict=None):     
-        if not df.empty:
-            print(f"Uploading Data for {table}")
-            for col in df.columns:
-                df[col]=df[col].replace(np.inf,np.nan)
-                if df[col].isnull().sum() > 0:
-                    df[col] = np.where(df[col].isnull(), None, df[col])
-                    
-            params=list(tuple(row) for row in df.values)
-            # print(params)
-            sql=f"insert into {table} values ({','.join(['?']*len(df.columns))})"
-            # print(sql)
-            if len(params)!=0:
-                cursor.executemany(sql,params)
-                cursor.commit()
-                print("Data Uploaded..........")
-            else:
-                print("No Data to Upload")
+def upload_data(df:pd.DataFrame, table:str, delete_date:dt.date=None, date_col:str=None, where:dict=None):     
+    if not df.empty:
+        print(f"Uploading Data for {table}")
+        for col in df.columns:
+            df[col]=df[col].replace(np.inf, np.nan)
+            if df[col].isnull().sum() > 0:
+                df[col] = np.where(df[col].isnull(), None, df[col])
+        
+        params = list(tuple(row) for row in df.values)
+        # Dynamically construct the SQL statement to include the schema
+        sql = f"INSERT INTO {db_config['schema']}.{table} VALUES ({','.join(['?']*len(df.columns))})"
+        if len(params) != 0:
+            cursor.executemany(sql, params)
+            cursor.commit()
+            print("Data Uploaded..........")
         else:
-            print("Nothing To Upload")
-            
+            print("No Data to Upload")
+    else:
+        print("Nothing To Upload")
+
 def delete_data(table,date,date_col,where=None):
         print(f"deleting data from table {table} for date {date}")
         sql=f"delete from {table} where {date_col}='{date}'"
@@ -97,19 +127,7 @@ def delete_old_data(df):
     for date in df['Date'].unique():
         delete_data('nsr_prod_real_time_price',date=date,date_col='Date')
 
-
 def run():
-    urls = [
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-368.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-218.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-226.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-355.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-541.html",
-        "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-708.html"
-    ]
-    
     combined_df = pd.DataFrame()
     for url in urls:
         df = fetch_commodity_data(url)
@@ -117,7 +135,7 @@ def run():
     
     if not combined_df.empty:
         delete_old_data(combined_df)
-        upload_data(combined_df, table='nsr_prod_real_time_price')
+        upload_data(combined_df, table=db_config['table_name'])
 
 if __name__ == "__main__":
     run()

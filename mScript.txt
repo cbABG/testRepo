@@ -1,0 +1,276 @@
+m-script consolidated file:
+
+1.Paraffin (Brent-Oil)
+====================
+
+"let
+    Source = Web.BrowserContents(""https://in.investing.com/commodities/brent-oil-historical-data""),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(1)""}, {""Column2"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(2)""}, {""Column3"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(3)""}, {""Column4"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(4)""}, {""Column5"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(5)""}, {""Column6"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(6)""}, {""Column7"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(7)""}}, [RowSelector=""TABLE.common-table.medium.js-table > * > TR""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Date"", type date}, {""Price"", type number}, {""Open"", type number}, {""High"", type number}, {""Low"", type number}, {""Volume"", type text}, {""Chg%"", Percentage.Type}}),
+    #""Added Custom"" = Table.AddColumn(#""Changed Type"", ""Product Name"", each ""Brent-Oil""),
+    #""Renamed Columns"" = Table.RenameColumns(#""Added Custom"",{{""Date"", ""Created_Date""}})
+in
+    #""Renamed Columns"""
+
+
+
+2.Diesel:
+========
+
+    "let
+    Source = Web.BrowserContents(""https://www.goodreturns.in/diesel-price-in-mumbai.html""),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", ""DIV.gold_silver_table > TABLE > * > TR > :nth-child(1)""}, {""Column2"", ""DIV.gold_silver_table > TABLE > * > TR > :nth-child(2)""}, {""Column3"", ""DIV.gold_silver_table > TABLE > * > TR > :nth-child(3)""}}, [RowSelector=""DIV.gold_silver_table > TABLE > * > TR""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Replaced Value"" = Table.ReplaceValue(#""Promoted Headers"",""₹"","""",Replacer.ReplaceText,{""Price"", ""Price Change""}),
+    #""Trimmed Text"" = Table.TransformColumns(#""Replaced Value"",{{""Price"", Text.Trim, type text}, {""Price Change"", Text.Trim, type text}}),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Trimmed Text"",{{""Price"", type number}, {""Price Change"", type number}}),
+    #""Added Custom"" = Table.AddColumn(#""Changed Type"", ""Product Name"", each ""Diesel""),
+    #""Renamed Columns"" = Table.RenameColumns(#""Added Custom"",{{""Date"", ""Created_Date""}}),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Renamed Columns"",{{""Created_Date"", type date}}),
+    #""Sorted Rows"" = Table.Sort(#""Changed Type1"",{{""Created_Date"", Order.Ascending}})
+in
+    #""Sorted Rows"""
+
+3.Crude Oil
+=========
+
+"let
+    Source = Web.BrowserContents(""https://in.investing.com/indices/mcx-icomdex-crude-oil-historical-data""),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(1)""}, {""Column2"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(2)""}, {""Column3"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(3)""}, {""Column4"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(4)""}, {""Column5"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(5)""}, {""Column6"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(6)""}, {""Column7"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(7)""}}, [RowSelector=""TABLE.common-table.medium.js-table > * > TR""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Date"", type date}, {""Price"", type number}, {""Open"", type number}, {""High"", type number}, {""Low"", type number}, {""Volume"", Int64.Type}, {""Chg%"", Percentage.Type}}),
+    #""Added Custom"" = Table.AddColumn(#""Changed Type"", ""Product Name"", each ""Crude Oil""),
+    #""Renamed Columns"" = Table.RenameColumns(#""Added Custom"",{{""Date"", ""Created_Date""}}),
+    #""Sorted Rows"" = Table.Sort(#""Renamed Columns"",{{""Created_Date"", Order.Ascending}})
+in
+    #""Sorted Rows"""
+
+
+4.Methanol
+=========
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-817.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""Methanol""),
+    #""Multiplied Column"" = Table.TransformColumns(#""Added Custom"", {{""Price"", each _ * 1.2, type number}})
+in
+    #""Multiplied Column""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html//"
+
+
+5.Sulfuric Acid
+==============
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-236.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""Sulfuric Acid"")
+in
+    #""Added Custom""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html//"
+
+6.Caustic Soda
+=============
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-368.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""CSL (32%)""),
+    #""Divided Column"" = Table.TransformColumns(#""Added Custom"", {{""Price"", each _ / 0.32, type number}}),
+    #""Multiplied Column"" = Table.TransformColumns(#""Divided Column"", {{""Price"", each _ * 1.2, type number}})
+in
+    #""Multiplied Column""
+    //http://http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-368.html//"
+
+
+7.Acetic Acid
+============
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-218.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""Acetic Acid"")
+in
+    #""Added Custom""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-218.html//"
+
+
+8.Soda Ash
+=========
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-226.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""Soda Ash"")
+in
+    #""Added Custom""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-226.html//"
+
+9.Hydrochloric Acid
+==================
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-355.html
+    ""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""Hydrochloric Acid 32 %"")
+in
+    #""Added Custom""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-355.html//"
+
+
+10.PA
+===
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-541.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""PA""),
+    #""Multiplied Column"" = Table.TransformColumns(#""Added Custom"", {{""Price"", each _ * 1.2, type number}})
+in
+    #""Multiplied Column""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-541.html//"
+
+
+11.Phosphorus Yellow
+==================
+
+"let
+     Source = Web.Contents(""http://www.sunsirs.com"",
+    [RelativePath=""m/page/commodity-price-detail/commodity-price-detail-708.html""]),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", "".no_select P:nth-child(2)""}, {""Column2"", "".no_select P:nth-child(3)""}}, [RowSelector="".zwd_table_li""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Price"", Int64.Type}, {""Date"", type text}}),
+    #""Reordered Columns"" = Table.ReorderColumns(#""Changed Type"",{""Date"", ""Price""}),
+    #""Inserted First Characters"" = Table.AddColumn(#""Reordered Columns"", ""First Characters"", each Text.Start([Date], 2), type text),
+    #""Inserted Text After Delimiter"" = Table.AddColumn(#""Inserted First Characters"", ""Text After Delimiter"", each Text.AfterDelimiter([Date], ""/""), type text),
+    #""Merged Columns"" = Table.CombineColumns(#""Inserted Text After Delimiter"",{""Text After Delimiter"", ""First Characters""},Combiner.CombineTextByDelimiter(""-"", QuoteStyle.None),""Merged""),
+    #""Changed Type1"" = Table.TransformColumnTypes(#""Merged Columns"",{{""Merged"", type date}}),
+    #""Renamed Columns"" = Table.RenameColumns(#""Changed Type1"",{{""Merged"", ""Created_Date""}}),
+    #""Reordered Columns1"" = Table.ReorderColumns(#""Renamed Columns"",{""Created_Date"", ""Price"", ""Date""}),
+    #""Added Custom"" = Table.AddColumn(#""Reordered Columns1"", ""Product Name"", each ""Phosphorus"")
+in
+    #""Added Custom""
+    //http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-708.html//"
+
+
+12.RMB to INR Conversion
+======================
+
+"let
+    Source = Web.BrowserContents(""https://in.investing.com/currencies/cny-inr-historical-data""),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(1)""}, {""Column2"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(2)""}, {""Column3"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(3)""}, {""Column4"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(4)""}, {""Column5"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(5)""}, {""Column6"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(6)""}, {""Column7"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(7)""}}, [RowSelector=""TABLE.common-table.medium.js-table > * > TR""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Date"", type date}, {""Price"", type number}, {""Open"", type number}, {""High"", type number}, {""Low"", type number}, {""Volume"", Int64.Type}, {""Chg%"", Percentage.Type}})
+in
+    #""Changed Type"""
+
+13.USD to INR Conversion
+======================
+
+"let
+    Source = Web.BrowserContents(""https://in.investing.com/currencies/usd-inr-historical-data""),
+    #""Extracted Table From Html"" = Html.Table(Source, {{""Column1"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(1)""}, {""Column2"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(2)""}, {""Column3"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(3)""}, {""Column4"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(4)""}, {""Column5"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(5)""}, {""Column6"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(6)""}, {""Column7"", ""TABLE.common-table.medium.js-table > * > TR > :nth-child(7)""}}, [RowSelector=""TABLE.common-table.medium.js-table > * > TR""]),
+    #""Promoted Headers"" = Table.PromoteHeaders(#""Extracted Table From Html"", [PromoteAllScalars=true]),
+    #""Changed Type"" = Table.TransformColumnTypes(#""Promoted Headers"",{{""Date"", type date}, {""Price"", type number}, {""Open"", type number}, {""High"", type number}, {""Low"", type number}, {""Volume"", Int64.Type}, {""Chg%"", Percentage.Type}})
+in
+    #""Changed Type"""
+
+
+
+
+
+CREATE TABLE SpotPriceTracker_dev (
+    id BIGINT NOT NULL IDENTITY(1,1),
+    QueryTimestamp DATETIME NOT NULL,
+    TableFetchTimestamp DATETIME NOT NULL,
+    Price INT NOT NULL,
+    Currency VARCHAR(50),
+    Open FLOAT,
+    High FLOAT,
+    Low FLOAT,
+    Volume VARCHAR(255),
+    ChgPerc FLOAT,
+    ProductName VARCHAR(255),
+    Type VARCHAR(50),
+    WebsiteName VARCHAR(255),
+    USD_INR FLOAT,
+    RMB_INR FLOAT,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE SpotPriceTracker_dev
+ADD IdentifierKey AS CONCAT(TableFetchTimestamp, '_', ProductName, '_', WebsiteName)
+
+     

@@ -1,0 +1,28 @@
+database:
+  development:
+    driver: '{ODBC Driver 17 for SQL Server}'
+    server: 'grcd-az-mdg-pp-sql-01.database.windows.net'
+    database: 'DB_development'
+    uid: 'pelsqldb'
+    pwd: '$pEl*@driYOd'
+    table_name: 'nsr_prod_real_time_price'
+    schema: 'dbo'  # Adjusted for clarity, replace with your actual dev schema if different
+
+  #production:
+  #  driver: '{ODBC Driver 17 for SQL Server}'
+  #  server: 'grcd-az-mdg-pp-sql-01.database.windows.net'
+  #  database: 'DBO'
+  #  uid: 'azuremdg.bihsqldb',
+  #  pwd: '@Zu7$3Qmi$y',
+  #  table_name: 'nsr_prod_real_time_price'
+  #  schema: 'dbo' 
+
+urls:
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-368.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-218.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-226.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-355.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-541.html
+    - http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-708.html

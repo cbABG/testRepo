@@ -1,3 +1,4 @@
+import os 
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup 
@@ -6,10 +7,39 @@ import numpy as np
 import pyodbc
 import traceback
 
-conn=pyodbc.connect(driver='{ODBC Driver 17 for SQL Server}',server='grcd-az-mdg-pp-sql-01.database.windows.net',
-                            database='GRCD-AZ-PEL-PP-DBA-01',uid='azuremdg.pelsqldb',pwd='$pEl*@driYOd'
-                            )
-cursor=conn.cursor()
+# Check if running in production or development
+environment = os.getenv('ENV', 'development')  # Defaults to 'development' if ENV is not set
+
+# Database credentials and table names based on the environment
+if environment == 'production':
+    conn_str = {
+        'driver': '{ODBC Driver 17 for SQL Server}',
+        'server': 'grcd-az-mdg-pp-sql-01.database.windows.net',
+        'database': 'GRCD-AZ-BIH-PP-DBA-01',
+        'uid': 'azuremdg.pelsqldb',
+        'pwd': '$pEl*@driYOd'
+    }
+    table_name = 'db_development.nsr_prod_real_time_price'
+else:
+    conn_str = {
+        'driver': '{ODBC Driver 17 for SQL Server}',
+        'server': 'grcd-az-mdg-pp-sql-01.database.windows.net',
+        'database': 'GRCD-AZ-BIH-PP-DBA-01',
+        'uid': 'azuremdg.pelsqldb',
+        'pwd': '$pEl*@driYOd'
+    }
+    table_name = 'db_development.nsr_prod_real_time_price'
+
+# Use conn_str for database connection
+conn = pyodbc.connect(
+    driver=conn_str['driver'],
+    server=conn_str['server'],
+    database=conn_str['database'],
+    uid=conn_str['uid'],
+    pwd=conn_str['pwd']
+)
+cursor = conn.cursor()
+
 
 def find_year(date):
     year=dt.today().year
@@ -24,12 +54,13 @@ def find_year(date):
     else:
         return dt(day=day,month=month,year=year)
 
+
 def fetch_commodity_data(url):
     payload = {}
     headers = {}
-    http_proxy  = "185.46.212.91:80"
-    proxies = {'http': http_proxy}
-    response = requests.request("GET", url, proxies=proxies)
+    http_proxy  = "185.46.212.91:80"#
+    proxies = {'http': http_proxy}#
+    response = requests.request("GET", url, proxies=proxies)#
     html = response.content
     
     # creating soup object 
@@ -66,7 +97,7 @@ def upload_data(df:pd.DataFrame,table:str,delete_date:dt.date=None,date_col:str=
                     
             params=list(tuple(row) for row in df.values)
             # print(params)
-            sql=f"insert into {table} values ({','.join(['?']*len(df.columns))})"
+            sql=f"insert into db_development.{table} values ({','.join(['?']*len(df.columns))})"
             # print(sql)
             if len(params)!=0:
                 cursor.executemany(sql,params)
@@ -76,7 +107,7 @@ def upload_data(df:pd.DataFrame,table:str,delete_date:dt.date=None,date_col:str=
                 print("No Data to Upload")
         else:
             print("Nothing To Upload")
-            
+
 def delete_data(table,date,date_col,where=None):
         print(f"deleting data from table {table} for date {date}")
         sql=f"delete from {table} where {date_col}='{date}'"
@@ -92,13 +123,13 @@ def delete_data(table,date,date_col,where=None):
         # print(sql)
         cursor.execute(sql)
         cursor.commit()
-
+                  
 def delete_old_data(df):
     for date in df['Date'].unique():
         delete_data('nsr_prod_real_time_price',date=date,date_col='Date')
-
-
+        
 def run():
+    
     urls = [
         "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-817.html",
         "http://www.sunsirs.com/m/page/commodity-price-detail/commodity-price-detail-236.html",
@@ -117,7 +148,11 @@ def run():
     
     if not combined_df.empty:
         delete_old_data(combined_df)
-        upload_data(combined_df, table='nsr_prod_real_time_price')
+        upload_data(combined_df, table='table_name')
+    
+    if not combined_df.empty:
+        delete_old_data(combined_df)
+        upload_data(combined_df, table=table_name) 
 
 if __name__ == "__main__":
     run()
