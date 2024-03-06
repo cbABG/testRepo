@@ -39,7 +39,7 @@ websites:
     product_name: "Phosphorus yellow" 
     type: "RM"
     currency: "RMB"
-  #- WebsiteName: "investing"
+  ##- WebsiteName: "investing"
   #  url: "https://in.investing.com/commodities/brent-oil-historical-data"
   #  product_name: "Paraffin (Brent-Oil)" 
   #  type: "RM"
